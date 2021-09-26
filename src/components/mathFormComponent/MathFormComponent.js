@@ -27,8 +27,8 @@ export class MathFormComponent extends React.Component {
                     <ControlMathComponent onChangeControl={this.onChangeControl} name="firstValue" />
                     <ControlMathComponent onChangeControl={this.onChangeControl} name="secondValue" />
                 </form>
-                <p>{` Конвертация на 0,5 = ${this.state.form.firstValue * 0.5}`}</p>
-                <p>{` Конвертация на 0,05 = ${this.state.form.secondValue * 0.05}`}</p>
+                <p>Конвертация на 0,5 = {this.state.form.firstValue * 0.5}</p>
+                <p>Конвертация на 0,05 = {this.state.form.secondValue * 0.05}</p>
             </div>
         );
     }

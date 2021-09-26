@@ -10,7 +10,7 @@ export class ControlMathComponent extends React.Component {
     }
 
     changeHandler(e) {
-        if ((e.target.value !== null) && (/^\d+$/.test(e.target.value))) {
+        if ((e.target.value === '') || (/^\d+$/.test(e.target.value))) {
             this.setState({ value: e.target.value });
             this.props.onChangeControl({ [this.props.name]: e.target.value })
         }

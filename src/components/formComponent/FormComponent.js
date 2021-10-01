@@ -1,5 +1,6 @@
 import React from "react";
 import { ControlComponent } from "../controlComponent/ControlComponent";
+import styles from './FormComponent.module.scss'
 
 class FormComponent extends React.Component {
     constructor(props) {
@@ -26,24 +27,26 @@ class FormComponent extends React.Component {
     }
 
     onChangeControl(obj) {
-        this.setState({form: {...this.state.form, ...obj}});
-        console.log(this.state);
+        this.setState({ form: { ...this.state.form, ...obj } });
+
     }
 
     showValues() {
-        this.setState({isShowResult: true});
+            this.setState({ isShowResult: true });        
     }
 
     render() {
         return (
-            <div>
+            <div className={styles.container}>
                 <form onSubmit={this.submitHandler}>
                     <ControlComponent onChangeControl={this.onChangeControl} name="login" />
                     <ControlComponent onChangeControl={this.onChangeControl} name="firstName" />
                     <ControlComponent onChangeControl={this.onChangeControl} name="lastName" />
-                    <input type="submit" value="Submit" onClick={this.showValues} />
+                    <div className={styles.btnSubmit}>
+                        <input type="submit" value="Submit" onClick={this.showValues} />
+                    </div>
                 </form>
-                {this.state.isShowResult && <p>{JSON.stringify(this.state.form)}</p>}
+                {this.state.isShowResult && <p>Данные отправлены</p>}
             </div>
 
         );

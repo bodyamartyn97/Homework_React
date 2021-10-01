@@ -1,0 +1,14 @@
+.form_input {   
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+}
+
+input {
+    outline: none;
+    border: none;
+}
+
+.error {
+    border: 1px solid red;
+}

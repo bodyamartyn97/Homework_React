@@ -35,9 +35,9 @@ class FormComponent extends React.Component {
         let isFormInvalid = Object.keys(this.state.form).some(prop => this.state.form[prop].isInvalid);
 
         if (isFormInvalid) {
-            this.state.isShowResult = false;
+            this.setState({isShowResult: false});            
         } else {
-            this.state.isShowResult = true;
+            this.setState({isShowResult: true});
         }
     }
 

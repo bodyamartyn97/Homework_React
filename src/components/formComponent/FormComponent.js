@@ -7,43 +7,68 @@ class FormComponent extends React.Component {
         super(props);
         this.state = {
             form: {
-                login: '',
-                firstName: '',
-                lastName: ''
+                login: {
+                    value: '',
+                    isInvalid: false
+                },
+                firstName: {
+                    value: '',
+                    isInvalid: false
+                },
+                lastName: {
+                    value: '',
+                    isInvalid: false
+                }
             },
 
-            isShowResult: false
+            isShowResult: false,
 
         }
 
         this.submitHandler = this.submitHandler.bind(this);
         this.onChangeControl = this.onChangeControl.bind(this);
-        this.showValues = this.showValues.bind(this);
     }
 
     submitHandler(e) {
         e.preventDefault();
-        console.log(e.target)
+        this.validationForm();
+        let isFormInvalid = Object.keys(this.state.form).some(prop => this.state.form[prop].isInvalid);
+
+        if (isFormInvalid) {
+            this.state.isShowResult = false;
+        } else {
+            this.state.isShowResult = true;
+        }
     }
 
-    onChangeControl(obj) {
-        this.setState({ form: { ...this.state.form, ...obj } });
-
+    validationForm() {
+        const newForm = Object.assign({}, this.state.form);
+        Object.keys(newForm).forEach(prop => {
+            newForm[prop].isInvalid = this.isControlInvalid(newForm[prop].value)
+        });
+        this.setState({ form: newForm });
     }
 
-    showValues() {
-            this.setState({ isShowResult: true });        
+    isControlInvalid(value) {
+        return value === '' || /^\d+$/.test(value);
+    }
+
+    onChangeControl(name, value) {
+        const newForm = Object.assign({}, this.state.form);
+        newForm[name].value = value;
+        this.setState({ form: newForm });
+
     }
 
     render() {
         return (
             <div className={styles.container}>
                 <form onSubmit={this.submitHandler}>
-                    <ControlComponent onChangeControl={this.onChangeControl} name="login" />
-                    <ControlComponent onChangeControl={this.onChangeControl} name="firstName" />
-                    <ControlComponent onChangeControl={this.onChangeControl} name="lastName" />
+                    <ControlComponent onChangeControl={this.onChangeControl} value={this.state.form.login.value} isInvalid={this.state.form.login.isInvalid} name="login" />
+                    <ControlComponent onChangeControl={this.onChangeControl} value={this.state.form.firstName.value} isInvalid={this.state.form.firstName.isInvalid} name="firstName" />
+                    <ControlComponent onChangeControl={this.onChangeControl} value={this.state.form.lastName.value} isInvalid={this.state.form.lastName.isInvalid} name="lastName" />
                     <div className={styles.btnSubmit}>
-                        <input type="submit" value="Submit" onClick={this.showValues} />
+                        <input type="submit" value="Submit" />
                     </div>
                 </form>
                 {this.state.isShowResult && <p>Данные отправлены</p>}
